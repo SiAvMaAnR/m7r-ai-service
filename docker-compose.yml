@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: ai-service-db
+    restart: on-failure
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=Sosnova61S
+      - POSTGRES_USER=SiAvMaAnR
+      - POSTGRES_DB=AiService
+    volumes:
+      - ./.meta/postgres:/var/lib/postgresql/data
+
+  rabbitMQ:
+    image: rabbitmq:latest
+    container_name: ai-service-rabbit-mq
+    restart: on-failure
+    ports:
+      - 5672:5672
