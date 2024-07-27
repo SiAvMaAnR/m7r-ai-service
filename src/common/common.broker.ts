@@ -4,9 +4,9 @@ const rabbitMQConfig: MicroserviceOptions = {
   transport: Transport.RMQ,
   options: {
     urls: ['amqp://localhost:5672'],
-    queue: 'ai__queue',
+    queue: 'ai-queue',
     queueOptions: {
-      durable: false,
+      durable: true,
     },
   },
 };
