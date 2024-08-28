@@ -1,14 +1,19 @@
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
-const rabbitMQConfig: MicroserviceOptions = {
+type RMQConfigArgsT = {
+  urls: Array<string>;
+  queue: string;
+};
+
+const rabbitMQConfig = (args: RMQConfigArgsT): MicroserviceOptions => ({
   transport: Transport.RMQ,
   options: {
-    urls: ['amqp://localhost:5672'],
-    queue: 'ai-queue',
+    urls: args.urls,
+    queue: args.queue,
     queueOptions: {
       durable: true,
     },
   },
-};
+});
 
 export { rabbitMQConfig };
