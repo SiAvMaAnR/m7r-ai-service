@@ -3,9 +3,12 @@ import { AppModule } from './app.module';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { rabbitMQConfig } from './config/rabbitmq.config';
+import { createDocument } from './config/swagger.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
 
   const configService = app.get(ConfigService);
 
@@ -19,6 +22,8 @@ async function bootstrap() {
   });
 
   app.connectMicroservice<MicroserviceOptions>(rmqConfig);
+
+  createDocument(app);
 
   await app.startAllMicroservices();
   await app.listen(appPort);
