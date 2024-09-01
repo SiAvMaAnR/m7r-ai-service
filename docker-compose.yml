@@ -6,7 +6,13 @@ services:
     container_name: ai-service
     restart: on-failure
     ports:
-      - '8081:8081'
+      - '8082:8082'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
 
   # postgres:
   #   image: postgres:latest
