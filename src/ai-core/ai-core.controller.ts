@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AiCoreService } from './ai-core.service';
 import { CreateCompletionDto } from './dto/create-completion.dto';
-import { CustomEventPattern } from 'src/common/common.decorators';
+import { CustomEventPattern } from '../common/common.decorators';
 
 @Controller('api/ai-core')
 export class AiCoreController {
