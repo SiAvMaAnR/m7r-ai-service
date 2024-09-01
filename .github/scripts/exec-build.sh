@@ -1,4 +1,6 @@
-npm i
+npm i jest
+
+npm i eslint
 
 npm run build
 
