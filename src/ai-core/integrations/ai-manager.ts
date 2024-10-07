@@ -9,7 +9,7 @@ export interface IAIModel {
 
 @Injectable()
 export class AIManager {
-  public constructor(private readonly model: IAIModel) {}
+  constructor(private readonly model: IAIModel) {}
 
   createCompletion(args: CreateCompletionArgsT) {
     return this.model.createCompletion(args);
