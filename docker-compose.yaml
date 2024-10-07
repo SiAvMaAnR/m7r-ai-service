@@ -6,12 +6,12 @@ services:
     container_name: ai-service
     restart: on-failure
     environment:
-      APP_PORT: 8082
+      APP_PORT: 8085
       MAIL_PORT: 587
       RMQ_QUEUE: 'ai-queue'
       RMQ_URL: 'amqp://rabbitmq:5672'
     ports:
-      - '8082:8082'
+      - '8085:8085'
     networks:
       - app-network
 
