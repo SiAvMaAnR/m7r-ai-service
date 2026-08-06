@@ -13,8 +13,18 @@ export type ProfilesRepositoryGetManyArgsT = {
 
 export type ProfilesRepositoryGetOneArgsT = {
   id: number;
-  accountId?: number;
+  accountId: number;
 };
+
+export type ProfilesRepositoryCreateEntityT = Omit<
+  Partial<Profile>,
+  'id' | 'accountId'
+>;
+
+export type ProfilesRepositoryUpdateEntityT = Omit<
+  Partial<Profile>,
+  'id' | 'accountId'
+>;
 
 export type GetProfilesArgsT = PaginationT & {
   searchField?: string;

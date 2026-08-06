@@ -12,6 +12,7 @@ export const config = (): Config => ({
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     name: process.env.DATABASE_NAME,
+    synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
   },
 });
 
@@ -25,6 +26,7 @@ export interface DbConfig {
   username: string;
   password: string;
   name: string;
+  synchronize: boolean;
 }
 
 export interface RMQConfig {
