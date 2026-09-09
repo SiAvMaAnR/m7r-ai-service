@@ -6,11 +6,13 @@ import { config } from './config/app.config';
 import { ProfilesModule } from './profiles/profiles.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMFactory } from './config/typeorm.config';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     ProfilesModule,
     AiCoreModule,
+    HealthModule,
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

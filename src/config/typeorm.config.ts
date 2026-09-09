@@ -11,6 +11,7 @@ export async function typeORMFactory(
     password,
     port,
     username,
+    synchronize,
   } = configService.get<DbConfig>('db');
 
   return {
@@ -20,7 +21,7 @@ export async function typeORMFactory(
     username,
     password,
     database,
-    synchronize: true,
+    synchronize,
     autoLoadEntities: true,
     logging: false,
   };

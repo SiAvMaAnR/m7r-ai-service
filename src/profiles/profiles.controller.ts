@@ -8,15 +8,18 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { ProfilesService } from './profiles.service';
 import { ApiTags } from '@nestjs/swagger';
 import { GetProfilesArgsT } from './profiles.types';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { AccountGuard } from 'src/common/guards/account.guard';
 
 @Controller('api/profiles')
 @ApiTags('Profiles')
+@UseGuards(AccountGuard)
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 

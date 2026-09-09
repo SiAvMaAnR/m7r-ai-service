@@ -19,9 +19,8 @@ export class ProfilesService extends Service {
   }
 
   async createProfile(createProfileDto: CreateProfileDto): Promise<Profile> {
-    const profile = await this.profilesRepository.create({
+    const profile = await this.profilesRepository.create(this.accountId, {
       ...createProfileDto,
-      accountId: this.accountId,
       integration: modelMapper[createProfileDto.model],
     });
 
@@ -29,16 +28,15 @@ export class ProfilesService extends Service {
   }
 
   async deleteProfile(id: number): Promise<void> {
-    await this.profilesRepository.delete(id);
+    await this.profilesRepository.delete(this.accountId, id);
   }
 
   async updateProfile(
     id: number,
     updateProfileDto: UpdateProfileDto,
   ): Promise<Profile> {
-    const profile = await this.profilesRepository.update(id, {
+    const profile = await this.profilesRepository.update(this.accountId, id, {
       ...updateProfileDto,
-      accountId: this.accountId,
       integration: modelMapper[updateProfileDto.model],
     });
 

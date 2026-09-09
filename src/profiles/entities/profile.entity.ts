@@ -3,6 +3,7 @@ import {
   AIModelEnum,
 } from 'src/ai-core/integrations/ai-client.types';
 import { ColumnTypeEnum } from 'src/common/common.enums';
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -21,9 +22,11 @@ export class Profile {
   @Column({ nullable: true })
   name: string;
 
+  @Exclude({ toPlainOnly: true })
   @Column()
   apiKey: string;
 
+  @Exclude({ toPlainOnly: true })
   @Column({ nullable: true })
   additionalKey: string;
 

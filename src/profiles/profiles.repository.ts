@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from './entities/profile.entity';
 import { Repository, ILike, FindOptionsWhere } from 'typeorm';
 import {
+  ProfilesRepositoryCreateEntityT,
   ProfilesRepositoryGetManyArgsT,
   ProfilesRepositoryGetOneArgsT,
+  ProfilesRepositoryUpdateEntityT,
 } from './profiles.types';
 import { PagedResponseT } from 'src/common/common.types';
 
@@ -55,28 +57,42 @@ export class ProfilesRepository {
     return profile;
   }
 
-  async create(entity: Partial<Profile>): Promise<Profile> {
-    const profile = await this.profileRepository.save(entity);
-
-    return profile;
-  }
-
-  async update(id: number, entity: Partial<Profile>): Promise<Profile> {
-    const existingProfile = await this.profileRepository.findOneBy({ id });
-
-    if (!existingProfile) {
-      throw new Error(`Profile with ID ${id} not found`);
-    }
-
-    const profile = await this.profileRepository.save({
-      ...existingProfile,
+  async create(
+    accountId: number,
+    entity: ProfilesRepositoryCreateEntityT,
+  ): Promise<Profile> {
+    const { identifiers } = await this.profileRepository.insert({
       ...entity,
+      accountId,
     });
 
-    return profile;
+    const { id } = identifiers[0];
+
+    return this.profileRepository.findOneBy({ id, accountId });
   }
 
-  async delete(id: number): Promise<void> {
-    await this.profileRepository.delete({ id });
+  async update(
+    accountId: number,
+    id: number,
+    entity: ProfilesRepositoryUpdateEntityT,
+  ): Promise<Profile> {
+    const { affected } = await this.profileRepository.update(
+      { id, accountId },
+      entity,
+    );
+
+    if (!affected) {
+      throw new NotFoundException(`Profile with ID ${id} not found`);
+    }
+
+    return this.profileRepository.findOneBy({ id, accountId });
+  }
+
+  async delete(accountId: number, id: number): Promise<void> {
+    const { affected } = await this.profileRepository.delete({ id, accountId });
+
+    if (!affected) {
+      throw new NotFoundException(`Profile with ID ${id} not found`);
+    }
   }
 }
